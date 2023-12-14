@@ -1,7 +1,7 @@
 import pandas as pd
 import streamlit as st
 
-archivo_csv = "../CLN/base.csv"
+archivo_csv = "../songpedia/base.csv"
 df = pd.read_csv(archivo_csv)
 
 st.title('Songpedia')
