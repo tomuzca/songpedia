@@ -1,5 +1,6 @@
 import pandas as pd
 import streamlit as st
+import numpy
 
 archivo_csv = "/workspaces/songpedia/base.csv"
 df = pd.read_csv(archivo_csv)
@@ -7,28 +8,28 @@ df = pd.read_csv(archivo_csv)
 st.title('Songpedia')
 st.text("Aprende más acerca de tus canciones")
 
-# Text input para ingresar artistas (separados por comas)
+
 artistas_input = st.text_input('Ingresa artista:')
 
-# Convertir la entrada a minúsculas y dividirla en una lista
+
 artistas_elegidos = [artista.strip().lower() for artista in artistas_input.split(',') if artista.strip()]
 
-# Convertir la columna 'track_artist' a minúsculas en el DataFrame
+
 df['track_artist'] = df['track_artist'].str.lower()
 
-# Filtrar el DataFrame por artistas seleccionados
+
 df_filtrado_por_artistas = df[df['track_artist'].isin(artistas_elegidos)]
 
-# Multiselect para seleccionar canciones basado en los artistas seleccionados
+
 canciones_elegidas = st.multiselect('Selecciona canciones:', df_filtrado_por_artistas['track_name'].str.lower().unique())
 
-# Convertir la columna 'track_name' a minúsculas en el DataFrame filtrado
+
 df_filtrado_por_artistas['track_name'] = df_filtrado_por_artistas['track_name'].str.lower()
 
-# Filtrar el DataFrame por canciones seleccionadas
+
 df_filtrado_por_canciones = df_filtrado_por_artistas[df_filtrado_por_artistas['track_name'].isin(canciones_elegidas)]
 
-# Mostrar información para las canciones seleccionadas
+
 for index, row in df_filtrado_por_canciones.iterrows():
     tono = row['key']
     modo = row['mode']
